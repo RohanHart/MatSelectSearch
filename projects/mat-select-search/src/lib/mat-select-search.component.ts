@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Inject, Input, OnDestroy,Optional, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy, Optional, Output, Renderer2, SimpleChange, ViewChild } from '@angular/core';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ const INDEX_SELECT_ALL = 1;
   //changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [Searcher]
 })
-export class MatSelectSearchComponent implements AfterViewInit, OnDestroy {
+export class MatSelectSearchComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // Send the array which is to be searched/filtered
   @Input() list: Record<string, string>[] = [];
@@ -57,8 +57,6 @@ export class MatSelectSearchComponent implements AfterViewInit, OnDestroy {
     // If there is option to select all options then it should support multi select
     if (this.hasSelectAll) this.isMultiSelect = true;
     this.configMatOption();
-    this.fullList = this.list;
-    this.searcher.initSearch(this.list, this.searchProperties);
       this.subscriptions.add(this.matSelect.openedChange.subscribe(() => {
           const input = this.element.nativeElement;
           input.focus();
@@ -90,8 +88,14 @@ export class MatSelectSearchComponent implements AfterViewInit, OnDestroy {
             }
           })
       );
+  }
 
-    setTimeout(() => this.filtered.emit(this.fullList));
+  ngOnChanges(event: {list?: SimpleChange}) {
+    if (event.list && event.list.currentValue !== event.list.previousValue) {
+      this.fullList = this.list;
+      this.searcher.initSearch(this.list, this.searchProperties);
+      this.filtered.emit(this.fullList);
+    }
   }
 
   filterList(event: Event): void {
