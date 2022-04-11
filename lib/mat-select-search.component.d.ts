@@ -1,0 +1,45 @@
+import { AfterViewInit, ElementRef, EventEmitter, OnChanges, OnDestroy, Renderer2, SimpleChange } from '@angular/core';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { Searcher } from './searcher.service';
+import * as i0 from "@angular/core";
+export declare class MatSelectSearchComponent implements AfterViewInit, OnChanges, OnDestroy {
+    private matSelect;
+    private matOption;
+    private renderer;
+    private searcher;
+    list: Record<string, string>[];
+    searchProperties: string[];
+    clearSearchInput: boolean;
+    isMultiSelect: boolean;
+    hasSelectAll: boolean;
+    fixOnTop: boolean;
+    filtered: EventEmitter<Record<string, string>[]>;
+    element: ElementRef;
+    isLoading: boolean;
+    private filteredList;
+    private fullList;
+    private hasFilteredBefore;
+    private subscriptions;
+    private selectedOptions;
+    private nativeSelectAllCheckbox;
+    private clickListenerSelectAll;
+    constructor(matSelect: MatSelect, matOption: MatOption, renderer: Renderer2, searcher: Searcher);
+    ngAfterViewInit(): void;
+    ngOnChanges(event: {
+        list?: SimpleChange;
+    }): void;
+    filterList(event: Event): void;
+    stopCharPropagation(event: KeyboardEvent): void;
+    private configMatOption;
+    private configMultiSelect;
+    private enableSelectAll;
+    private selectAllOptions;
+    private deselectAlloptions;
+    private fixSearchBarOnTopWhileScroll;
+    private selectNativeSelectAllCheckbox;
+    private deselectNativeSelectAllCheckbox;
+    ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MatSelectSearchComponent, [null, { optional: true; }, null, null]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MatSelectSearchComponent, "lib-mat-select-search", never, { "list": "list"; "searchProperties": "searchProperties"; "clearSearchInput": "clearSearchInput"; "isMultiSelect": "isMultiSelect"; "hasSelectAll": "hasSelectAll"; "fixOnTop": "fixOnTop"; }, { "filtered": "filtered"; }, never, never>;
+}
