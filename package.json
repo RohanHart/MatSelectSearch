@@ -1,6 +1,6 @@
 {
   "name": "mat-select-search-dev",
-  "version": "0.0.0",
+  "version": "1.2.3.6",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
